@@ -1,3 +1,4 @@
+import 'package:bookreviewr_app/iu/add_review_screen.dart';
 import 'package:bookreviewr_app/iu/info_screen_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sutori'),
+        title: Text('BookReviewr'),
         backgroundColor: Colors.deepPurple[300],
         actions: [
           IconButton(
@@ -21,7 +22,21 @@ class HomeScreen extends StatelessWidget {
               icon: Icon(Icons.info))
         ],
       ),
-      body: Center(child: Text('Belum ada review buku')),
+      body: Center(child: TextButton(
+        onPressed: () {
+          showDialog(context: context, builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Contoh'),
+              content: Text('Silakan tulis review buku terbaru'),
+              actions: <Widget>[
+                TextButton(onPressed: () {
+                  Navigator.of(context).pop();
+                }, child: Text('OK'))
+              ],
+            );
+          });
+        },
+        child: Text('Belum ada review buku'))),
       drawer: Drawer(
         child: ListView(
           children: const <Widget>[
@@ -49,13 +64,17 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddReviewScreen()));
+        },
         child:
             Icon(Icons.photo_library), // Menggunakan ikon untuk mengunggah foto
       ),
       bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.library_books), label: 'Library'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.library_books), label: 'Library'),
         BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
       ]),
     );

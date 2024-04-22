@@ -14,6 +14,7 @@ class BookReviewrApp extends StatelessWidget {
     return MaterialApp(
       title: 'BookReviewr App',
       home: HomeScreen(),
+      debugShowCheckedModeBanner: false, // Menonaktifkan debug banner
     );
   }
 }
