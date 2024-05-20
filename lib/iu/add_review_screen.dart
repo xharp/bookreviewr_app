@@ -1,38 +1,78 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-class AddReviewScreen extends StatelessWidget {
+double randomBorderRadius(){
+  return Random().nextDouble() * 20;
+}
+
+double randomMargin(){
+  return Random().nextDouble() * 20;
+}
+
+Color randomColor() {
+  return Color.fromARGB(
+    255,
+    Random().nextInt(256),
+    Random().nextInt(256),
+    Random().nextInt(256),
+  );
+}
+
+class AddReviewScreen extends StatefulWidget {
   const AddReviewScreen({super.key});
+
+  @override
+  State<AddReviewScreen> createState() => _AddReviewScreenState();
+}
+
+class _AddReviewScreenState extends State<AddReviewScreen> {
+  late double borderRadius;
+  late double margin;
+  late Color color;
+
+  void initState() {
+    borderRadius = randomBorderRadius();
+    margin = randomMargin();
+    color = randomColor();
+    
+  }
+
+  void changeState(){
+    setState(() {
+    borderRadius = randomBorderRadius();
+    margin = randomMargin();
+    color = randomColor();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, constraints) {
-        if (constraints.maxWidth < 600) {
-          return ListView(
-            children: _generateConstraints(),
-          );
-        } else if (constraints.maxWidth < 900) {
-          return GridView.count(
-            crossAxisCount: 2,
-            children: _generateConstraints()
-            );
-        } else {
-          return GridView.count(crossAxisCount: 6
-          );
-        }
-      }
-      )
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 100,
+                height: 100,
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 2000),
+                  curve: Curves.bounceIn,
+                  margin: EdgeInsets.all(margin),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(borderRadius)
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () => changeState(), 
+                child: Text('Ubah'))
+            ],
+          ),
+        ),
+      ),
     );
-  }
-
-  List<Widget> _generateConstraints() {
-    return List<Widget>.generate(10, (index) {
-      return Container(
-        margin: EdgeInsets.all(8),
-        color: Colors.deepPurple[300],
-        height: 200,
-      );
-    });
   }
 }
