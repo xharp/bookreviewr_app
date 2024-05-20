@@ -10,15 +10,6 @@ double randomMargin(){
   return Random().nextDouble() * 20;
 }
 
-Color randomColor() {
-  return Color.fromARGB(
-    255,
-    Random().nextInt(256),
-    Random().nextInt(256),
-    Random().nextInt(256),
-  );
-}
-
 class AddReviewScreen extends StatefulWidget {
   const AddReviewScreen({super.key});
 
@@ -34,7 +25,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   void initState() {
     borderRadius = randomBorderRadius();
     margin = randomMargin();
-    color = randomColor();
     
   }
 
@@ -42,7 +32,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     setState(() {
     borderRadius = randomBorderRadius();
     margin = randomMargin();
-    color = randomColor();
     });
   }
 
@@ -61,7 +50,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                   curve: Curves.bounceIn,
                   margin: EdgeInsets.all(margin),
                   decoration: BoxDecoration(
-                    color: color,
+                    color: Colors.amber,
                     borderRadius: BorderRadius.circular(borderRadius)
                   ),
                 ),

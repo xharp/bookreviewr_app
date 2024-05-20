@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,6 +16,15 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   final List<String> items = List<String>.generate(10, (i) => "Item $i");
+
+  Color randomColor() {
+    return Color.fromARGB(
+      255,
+      Random().nextInt(256),
+      Random().nextInt(256),
+      Random().nextInt(256),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +64,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
+                color: randomColor(), // Use random color
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Center(
