@@ -3,6 +3,12 @@ import 'package:bookreviewr_app/iu/info_detail_screen.dart';
 import 'package:bookreviewr_app/iu/library_screen.dart';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MaterialApp(
+    home: HomeScreen(),
+  ));
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  bool _isHovered = false; // Track hover state
 
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Home Screen'),
@@ -51,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Center(
-        child: TextButton(
-          onPressed: () {
+        child: GestureDetector(
+          onTap: () {
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -71,7 +78,36 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             );
           },
-          child: Text('Belum ada review buku'),
+          child: MouseRegion(
+            onEnter: (_) {
+              setState(() {
+                _isHovered = true;
+              });
+            },
+            onExit: (_) {
+              setState(() {
+                _isHovered = false;
+              });
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              width: _isHovered ? 220 : 200,
+              height: _isHovered ? 220 : 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(_isHovered ? 20 : 10),
+                boxShadow: _isHovered
+                    ? [BoxShadow(color: Colors.black26, blurRadius: 10, spreadRadius: 1)]
+                    : [],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_isHovered ? 20 : 10),
+                child: Image.network(
+                  'https://www.southernliving.com/thmb/wsTKCknvqDW-B5ASPyZLv4zufQ8=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/gettyimages-183822187-1-709a5ded972a426a9e214eba1f81c8a4.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
       drawer: Drawer(
@@ -120,3 +156,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
